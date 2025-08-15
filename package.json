@@ -1,0 +1,59 @@
+{
+    "name": "chainwise",
+    "version": "3.1.0",
+    "description": "Universal Multi-Blockchain HD Wallet Provider",
+    "main": "dist/chainwise.min.js",
+    "browser": "dist/chainwise.min.js",
+    "types": "dist/chainwise.d.ts",
+    "files": [
+      "dist/",
+      "README.md",
+      "LICENSE",
+      "package.json"
+    ],
+    "scripts": {
+      "prepublishOnly": "npm run verify",
+      "verify": "node scripts/verify-build.js",
+      "test": "echo \"Tests will be added in future versions\" && exit 0",
+      "version": "npm run verify && git add -A dist",
+      "postversion": "git push && git push --tags"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/yourusername/chainwise.git"
+    },
+    "keywords": [
+      "blockchain",
+      "wallet",
+      "crypto",
+      "bitcoin",
+      "ethereum",
+      "solana",
+      "cardano",
+      "polkadot",
+      "hd-wallet",
+      "bip32",
+      "bip44",
+      "multi-chain",
+      "web3",
+      "cryptography",
+      "javascript",
+      "typescript",
+      "browser"
+    ],
+    "author": {
+      "name": "Branislav Djalic",
+      "email": "branislav.djalic@gmail.com",
+      "url": "https://chainwise.me"
+    },
+    "license": "MIT",
+    "bugs": {
+      "url": "https://github.com/Omodaka9375/ChainWise/issues"
+    },
+    "homepage": "https://chainwise.me",
+    "engines": {
+      "node": ">=14.0.0"
+    },
+    "jsdelivr": "dist/chainwise.min.js",
+    "unpkg": "dist/chainwise.min.js"
+  }
