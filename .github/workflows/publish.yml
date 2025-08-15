@@ -54,7 +54,7 @@ jobs:
 
       - name: Verify build exists
         run: |
-          if [ ! -f "chainwise.min.js" ]; then
+          if [ ! -f "dist/chainwise.min.js" ]; then
             echo "❌ chainwise.min.js not found"
             exit 1
           fi
@@ -64,7 +64,7 @@ jobs:
         run: |
           # Basic file size check
           MIN_SIZE=10000  # 10KB minimum
-          FILE_SIZE=$(stat -f%z chainwise.min.js 2>/dev/null || stat -c%s chainwise.min.js 2>/dev/null)
+          FILE_SIZE=$(stat -f%z dist/chainwise.min.js 2>/dev/null || stat -c%s dist/chainwise.min.js 2>/dev/null)
           
           if [ "$FILE_SIZE" -lt "$MIN_SIZE" ]; then
             echo "❌ chainwise.min.js is too small ($FILE_SIZE bytes)"
@@ -72,7 +72,7 @@ jobs:
           fi
           
           # Check for basic content
-          if ! grep -q "CryptoWallet" chainwise.min.js; then
+          if ! grep -q "CryptoWallet" dist/chainwise.min.js; then
             echo "❌ chainwise.min.js doesn't contain CryptoWallet"
             exit 1
           fi
@@ -84,7 +84,7 @@ jobs:
           # Test that the file is valid JavaScript
           node -e "
             const fs = require('fs');
-            const content = fs.readFileSync('chainwise.min.js', 'utf8');
+            const content = fs.readFileSync('dist/chainwise.min.js', 'utf8');
             if (content.includes('CryptoWallet') && content.includes('NETWORK_CONFIGS')) {
               console.log('✅ Library structure validated');
             } else {
@@ -129,10 +129,10 @@ jobs:
             "name": "chainwise",
             "version": "3.1.0",
             "description": "Universal Multi-Blockchain HD Wallet Library with Integrated Crypto Operations",
-            "main": "chainwise.min.js",
-            "browser": "chainwise.min.js",
+            "main": "dist/chainwise.min.js",
+            "browser": "dist/chainwise.min.js",
             "files": [
-              "chainwise.min.js",
+              "dist/chainwise.min.js",
               "README.md",
               "LICENSE"
             ],
