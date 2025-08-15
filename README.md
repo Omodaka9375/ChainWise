@@ -9,15 +9,13 @@
 
 [![npm version](https://badge.fury.io/js/chainwise.svg)](https://badge.fury.io/js/chainwise)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.org/chainwise/chainwise.svg?branch=main)](https://travis-ci.org/chainwise/chainwise)
-[![Coverage Status](https://coveralls.io/repos/github/chainwise/chainwise/badge.svg?branch=main)](https://coveralls.io/github/chainwise/chainwise?branch=main)
 
 </div>
 
 ## 🌟 Overview
-```
-ChainWise is a powerful, fast multi-blockchain HD wallet library that provides seamless cryptocurrency operations across 17+ blockchain networks. Built with a unified architecture, it eliminates the complexity of managing separate crypto libraries while providing enterprise-grade security and performance.
-```
+
+<b>ChainWise.js</b> is a powerful, fast, multi-blockchain HD wallet library that provides seamless cryptocurrency operations across 17+ blockchain networks. Built with a unified architecture, it eliminates the complexity of managing separate crypto libraries while providing enterprise-grade security and performance.
+
 
 ## 📦 Test Suite Webpage
 
@@ -528,12 +526,10 @@ try {
 
 MIT License - see the [LICENSE](LICENSE) file for details.
 
----
 
 <div align="center">
   <p><strong>Built with ❤️ by Omodaka9375</strong></p>
   <p>Making multi-blockchain development simple and secure</p>
 </div>
 
----
 
