@@ -519,14 +519,6 @@ try {
 }
 ```
 
-## 📞 Support & Community
-
-- 📚 **Documentation**: [https://chainwise.dev/docs](https://chainwise.dev/docs)
-- 🐛 **Issues**: [https://github.com/chainwise/chainwise/issues](https://github.com/chainwise/chainwise/issues)
-- 💬 **Discord**: [https://discord.gg/chainwise](https://discord.gg/chainwise)
-- 🐦 **Twitter**: [@ChainWiseLib](https://twitter.com/ChainWiseLib)
-- 📧 **Email**: support@chainwise.dev
-
 ## 📄 License
 
 MIT License - see the [LICENSE](LICENSE) file for details.
