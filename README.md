@@ -13,9 +13,9 @@
 </div>
 
 ## 🌟 Overview
-```
-ChainWise is a powerful, fast multi-blockchain HD wallet library that provides seamless cryptocurrency operations across 17+ blockchain networks. Built with a unified architecture, it eliminates the complexity of managing separate crypto libraries while providing enterprise-grade security and performance.
-```
+
+<b>ChainWise.js</b> is a powerful, fast, multi-blockchain HD wallet library that provides seamless cryptocurrency operations across 17+ blockchain networks. Built with a unified architecture, it eliminates the complexity of managing separate crypto libraries while providing enterprise-grade security and performance.
+
 
 ## 📦 Test Suite Webpage
 
