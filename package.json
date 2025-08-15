@@ -1,6 +1,6 @@
 {
     "name": "chainwise",
-    "version": "4.4.0",
+    "version": "4.2.1",
     "description": "Universal Multi-Blockchain HD Wallet Provider",
     "main": "dist/chainwise.min.js",
     "browser": "dist/chainwise.min.js",

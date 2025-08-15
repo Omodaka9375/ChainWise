@@ -1,6 +1,6 @@
 /**
  * ChainWise - Multi-Blockchain HD Wallet Library
- * Version: 4.4.0
+ * Version: 4.2.1
  */
 
 (function(global) {
