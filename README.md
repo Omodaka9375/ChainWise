@@ -9,8 +9,6 @@
 
 [![npm version](https://badge.fury.io/js/chainwise.svg)](https://badge.fury.io/js/chainwise)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Build Status](https://travis-ci.org/chainwise/chainwise.svg?branch=main)](https://travis-ci.org/chainwise/chainwise)
-[![Coverage Status](https://coveralls.io/repos/github/chainwise/chainwise/badge.svg?branch=main)](https://coveralls.io/github/chainwise/chainwise?branch=main)
 
 </div>
 
