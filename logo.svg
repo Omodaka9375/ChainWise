@@ -1,0 +1,267 @@
+                    <svg width="800" height="240" viewBox="0 0 400 120" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                          <!-- Neon Glow Filters -->
+                          <filter id="neonGlow" x="-50%" y="-50%" width="200%" height="200%">
+                            <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                            <feMerge> 
+                              <feMergeNode in="coloredBlur"/>
+                              <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                          </filter>
+                          
+                          <filter id="strongGlow" x="-100%" y="-100%" width="300%" height="300%">
+                            <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                            <feGaussianBlur stdDeviation="8" result="bigBlur"/>
+                            <feMerge> 
+                              <feMergeNode in="bigBlur"/>
+                              <feMergeNode in="coloredBlur"/>
+                              <feMergeNode in="SourceGraphic"/>
+                            </feMerge>
+                          </filter>
+                      
+                          <!-- Gradients -->
+                          <linearGradient id="primaryGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#00d4ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ff0080;stop-opacity:1" />
+                          </linearGradient>
+                          
+                          <linearGradient id="hexGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#00ff88;stop-opacity:0.8" />
+                            <stop offset="50%" style="stop-color:#00d4ff;stop-opacity:0.6" />
+                            <stop offset="100%" style="stop-color:#ff0080;stop-opacity:0.4" />
+                          </linearGradient>
+                      
+                          <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+                            <stop offset="25%" style="stop-color:#00d4ff;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#ff0080;stop-opacity:1" />
+                            <stop offset="75%" style="stop-color:#00d4ff;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#00ff88;stop-opacity:1" />
+                            <animateTransform
+                              attributeName="gradientTransform"
+                              type="translate"
+                              values="-50 0; 50 0; -50 0"
+                              dur="4s"
+                              repeatCount="indefinite"/>
+                          </linearGradient>
+                      
+                          <!-- Circuit Pattern -->
+                          <pattern id="circuitPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <rect width="20" height="20" fill="#0a0a0f"/>
+                            <path d="M0 10 L20 10 M10 0 L10 20" stroke="#00ff88" stroke-width="0.5" opacity="0.3"/>
+                            <circle cx="10" cy="10" r="1" fill="#00ff88" opacity="0.5"/>
+                          </pattern>
+                        </defs>
+                      
+                        <!-- Background -->
+                        <rect width="400" height="120" fill="#0a0a0f" rx="8"/>
+                        <rect width="400" height="120" fill="url(#circuitPattern)" rx="8" opacity="0.5"/>
+                        
+                        <!-- Centered Main Group -->
+                        <g transform="translate(200, 60)">
+                          <!-- Hexagon Symbol (Left Side) -->
+                          <g transform="translate(-120, 0)">
+                            <!-- Outer Hex Ring -->
+                            <polygon points="0,-20 17.32,-10 17.32,10 0,20 -17.32,10 -17.32,-10"
+                                     fill="none" 
+                                     stroke="url(#primaryGradient)" 
+                                     stroke-width="2" 
+                                     filter="url(#strongGlow)">
+                              <animateTransform
+                                attributeName="transform"
+                                attributeType="XML"
+                                type="rotate"
+                                from="0"
+                                to="360"
+                                dur="20s"
+                                repeatCount="indefinite"/>
+                            </polygon>
+                            
+                            <!-- Inner Hex -->
+                            <polygon points="0,-12 10.39,-6 10.39,6 0,12 -10.39,6 -10.39,-6"
+                                     fill="url(#hexGradient)" 
+                                     stroke="#00ff88" 
+                                     stroke-width="1" 
+                                     filter="url(#neonGlow)"/>
+                            
+                            <!-- Central Node -->
+                            <circle cx="0" cy="0" r="4" fill="#00ff88" filter="url(#strongGlow)">
+                              <animate attributeName="r" values="4;6;4" dur="2s" repeatCount="indefinite"/>
+                              <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite"/>
+                            </circle>
+                            
+                            <!-- Connection Lines -->
+                            <g stroke="#00d4ff" stroke-width="1" opacity="0.8" filter="url(#neonGlow)">
+                              <line x1="0" y1="-12" x2="0" y2="-20"/>
+                              <line x1="10.39" y1="-6" x2="17.32" y2="-10"/>
+                              <line x1="10.39" y1="6" x2="17.32" y2="10"/>
+                              <line x1="0" y1="12" x2="0" y2="20"/>
+                              <line x1="-10.39" y1="6" x2="-17.32" y2="10"/>
+                              <line x1="-10.39" y1="-6" x2="-17.32" y2="-10"/>
+                            </g>
+                            
+                            <!-- Network Nodes -->
+                            <g fill="#ff0080" filter="url(#neonGlow)">
+                              <circle cx="0" cy="-25" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="0s"/>
+                              </circle>
+                              <circle cx="21.65" cy="-12.5" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="0.3s"/>
+                              </circle>
+                              <circle cx="21.65" cy="12.5" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="0.6s"/>
+                              </circle>
+                              <circle cx="0" cy="25" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="0.9s"/>
+                              </circle>
+                              <circle cx="-21.65" cy="12.5" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="1.2s"/>
+                              </circle>
+                              <circle cx="-21.65" cy="-12.5" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="1.5s"/>
+                              </circle>
+                            </g>
+                          </g>
+                      
+                          <!-- Data Flow Lines (Connecting to Text) -->
+                          <g stroke="#00ff88" stroke-width="1" opacity="0.6" filter="url(#neonGlow)">
+                            <line x1="-95" y1="0" x2="-70" y2="0">
+                              <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="-95" y1="-8" x2="-70" y2="-5">
+                              <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" begin="0.5s"/>
+                            </line>
+                            <line x1="-95" y1="8" x2="-70" y2="5">
+                              <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </line>
+                          </g>
+                      
+                          <!-- Centered ChainWise Text -->
+                          <g transform="translate(0, 0)">
+                            <!-- CHAINWISE (Centered) -->
+                            <text x="0" y="0" 
+                                  font-family="Orbitron, monospace" 
+                                  font-size="22" 
+                                  font-weight="900" 
+                                  fill="url(#textGradient)" 
+                                  filter="url(#strongGlow)"
+                                  text-anchor="middle"
+                                  dominant-baseline="middle">CHAINWISE</text>
+    
+                          </g>
+                      
+                          <!-- Mirror Hexagon Symbol (Right Side) -->
+                          <g transform="translate(120, 0) scale(-1, 1)">
+                            <!-- Outer Hex Ring -->
+                            <polygon points="0,-20 17.32,-10 17.32,10 0,20 -17.32,10 -17.32,-10"
+                                     fill="none" 
+                                     stroke="url(#primaryGradient)" 
+                                     stroke-width="2" 
+                                     filter="url(#strongGlow)">
+                              <animateTransform
+                                attributeName="transform"
+                                attributeType="XML"
+                                type="rotate"
+                                from="360"
+                                to="0"
+                                dur="20s"
+                                repeatCount="indefinite"/>
+                            </polygon>
+                            
+                            <!-- Inner Hex -->
+                            <polygon points="0,-12 10.39,-6 10.39,6 0,12 -10.39,6 -10.39,-6"
+                                     fill="url(#hexGradient)" 
+                                     stroke="#00ff88" 
+                                     stroke-width="1" 
+                                     filter="url(#neonGlow)"/>
+                            
+                            <!-- Central Node -->
+                            <circle cx="0" cy="0" r="4" fill="#00ff88" filter="url(#strongGlow)">
+                              <animate attributeName="r" values="4;6;4" dur="2s" repeatCount="indefinite" begin="1s"/>
+                              <animate attributeName="opacity" values="1;0.7;1" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </circle>
+                            
+                            <!-- Connection Lines -->
+                            <g stroke="#00d4ff" stroke-width="1" opacity="0.8" filter="url(#neonGlow)">
+                              <line x1="0" y1="-12" x2="0" y2="-20"/>
+                              <line x1="10.39" y1="-6" x2="17.32" y2="-10"/>
+                              <line x1="10.39" y1="6" x2="17.32" y2="10"/>
+                              <line x1="0" y1="12" x2="0" y2="20"/>
+                              <line x1="-10.39" y1="6" x2="-17.32" y2="10"/>
+                              <line x1="-10.39" y1="-6" x2="-17.32" y2="-10"/>
+                            </g>
+                            
+                            <!-- Network Nodes (Mirrored Animation) -->
+                            <g fill="#ff0080" filter="url(#neonGlow)">
+                              <circle cx="0" cy="-25" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="1.5s"/>
+                              </circle>
+                              <circle cx="21.65" cy="-12.5" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="1.2s"/>
+                              </circle>
+                              <circle cx="21.65" cy="12.5" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="0.9s"/>
+                              </circle>
+                              <circle cx="0" cy="25" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="0.6s"/>
+                              </circle>
+                              <circle cx="-21.65" cy="12.5" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="0.3s"/>
+                              </circle>
+                              <circle cx="-21.65" cy="-12.5" r="2">
+                                <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite" begin="0s"/>
+                              </circle>
+                            </g>
+                          </g>
+                      
+                          <!-- More Data Flow Lines (Right Side) -->
+                          <g stroke="#00ff88" stroke-width="1" opacity="0.6" filter="url(#neonGlow)">
+                            <line x1="95" y1="0" x2="70" y2="0">
+                              <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" begin="1s"/>
+                            </line>
+                            <line x1="95" y1="-8" x2="70" y2="-5">
+                              <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" begin="1.5s"/>
+                            </line>
+                            <line x1="95" y1="8" x2="70" y2="5">
+                              <animate attributeName="opacity" values="0.3;1;0.3" dur="2s" repeatCount="indefinite" begin="0s"/>
+                            </line>
+                          </g>
+                      
+                          <!-- Central Connection Lines (Between Hexagons) -->
+                          <g stroke="#ff0080" stroke-width="0.5" opacity="0.4" filter="url(#neonGlow)">
+                            <line x1="-95" y1="-15" x2="95" y2="-15">
+                              <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite"/>
+                            </line>
+                            <line x1="-95" y1="15" x2="95" y2="15">
+                              <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+                            </line>
+                          </g>
+                        </g>
+                      
+                        <!-- Scan Line Effect -->
+                        <rect x="0" y="0" width="2" height="120" fill="#00ff88" opacity="0.7">
+                          <animateTransform
+                            attributeName="transform"
+                            type="translate"
+                            values="0,0; 400,0; 0,0"
+                            dur="4s"
+                            repeatCount="indefinite"/>
+                        </rect>
+                      
+                        <!-- Corner Glow Effects -->
+                        <g opacity="0.3">
+                          <circle cx="20" cy="20" r="3" fill="#00ff88" filter="url(#strongGlow)">
+                            <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite"/>
+                          </circle>
+                          <circle cx="380" cy="20" r="3" fill="#ff0080" filter="url(#strongGlow)">
+                            <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" begin="1s"/>
+                          </circle>
+                          <circle cx="380" cy="100" r="3" fill="#00d4ff" filter="url(#strongGlow)">
+                            <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" begin="2s"/>
+                          </circle>
+                          <circle cx="20" cy="100" r="3" fill="#00ff88" filter="url(#strongGlow)">
+                            <animate attributeName="opacity" values="0.3;0.8;0.3" dur="4s" repeatCount="indefinite" begin="3s"/>
+                          </circle>
+                        </g>
+                    </svg>

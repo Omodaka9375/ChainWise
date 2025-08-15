@@ -1,0 +1,151 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Filters -->
+    <filter id="iconGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feGaussianBlur stdDeviation="4" result="bigBlur"/>
+      <feMerge> 
+        <feMergeNode in="bigBlur"/>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Gradients -->
+    <radialGradient id="iconGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#00ff88;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#00d4ff;stop-opacity:0.8" />
+      <stop offset="100%" style="stop-color:#ff0080;stop-opacity:0.6" />
+    </radialGradient>
+    
+    <linearGradient id="backgroundGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0a0a0f;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Circuit Pattern -->
+    <pattern id="iconCircuit" x="0" y="0" width="16" height="16" patternUnits="userSpaceOnUse">
+      <rect width="16" height="16" fill="none"/>
+      <path d="M0 8 L16 8 M8 0 L8 16" stroke="#00ff88" stroke-width="0.3" opacity="0.2"/>
+      <circle cx="8" cy="8" r="0.5" fill="#00ff88" opacity="0.3"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="128" height="128" fill="url(#backgroundGradient)" rx="16"/>
+  <rect width="128" height="128" fill="url(#iconCircuit)" rx="16" opacity="0.4"/>
+  
+  <!-- Main Hexagon Network -->
+  <g transform="translate(64, 64)">
+    <!-- Outer Network Ring -->
+    <g stroke="#00ff88" stroke-width="1" opacity="0.6" filter="url(#iconGlow)">
+      <circle cx="0" cy="-35" r="3"/>
+      <circle cx="30" cy="-17.5" r="3"/>
+      <circle cx="30" cy="17.5" r="3"/>
+      <circle cx="0" cy="35" r="3"/>
+      <circle cx="-30" cy="17.5" r="3"/>
+      <circle cx="-30" cy="-17.5" r="3"/>
+      
+      <!-- Connection Lines -->
+      <line x1="0" y1="-35" x2="30" y2="-17.5" opacity="0.4">
+        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite" begin="0s"/>
+      </line>
+      <line x1="30" y1="-17.5" x2="30" y2="17.5" opacity="0.4">
+        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite" begin="0.5s"/>
+      </line>
+      <line x1="30" y1="17.5" x2="0" y2="35" opacity="0.4">
+        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite" begin="1s"/>
+      </line>
+      <line x1="0" y1="35" x2="-30" y2="17.5" opacity="0.4">
+        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite" begin="1.5s"/>
+      </line>
+      <line x1="-30" y1="17.5" x2="-30" y2="-17.5" opacity="0.4">
+        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite" begin="2s"/>
+      </line>
+      <line x1="-30" y1="-17.5" x2="0" y2="-35" opacity="0.4">
+        <animate attributeName="opacity" values="0.2;0.8;0.2" dur="3s" repeatCount="indefinite" begin="2.5s"/>
+      </line>
+    </g>
+    
+    <!-- Main Hexagon -->
+    <polygon points="0,-24 20.78,-12 20.78,12 0,24 -20.78,12 -20.78,-12"
+             fill="none" 
+             stroke="url(#iconGradient)" 
+             stroke-width="2" 
+             filter="url(#iconGlow)">
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        from="0"
+        to="360"
+        dur="15s"
+        repeatCount="indefinite"/>
+    </polygon>
+    
+    <!-- Inner Hexagon -->
+    <polygon points="0,-16 13.86,-8 13.86,8 0,16 -13.86,8 -13.86,-8"
+             fill="url(#iconGradient)" 
+             opacity="0.3"
+             stroke="#00d4ff" 
+             stroke-width="1" 
+             filter="url(#iconGlow)">
+      <animateTransform
+        attributeName="transform"
+        type="rotate"
+        from="360"
+        to="0"
+        dur="20s"
+        repeatCount="indefinite"/>
+    </polygon>
+    
+    <!-- Central Core -->
+    <circle cx="0" cy="0" r="8" fill="#00ff88" filter="url(#iconGlow)">
+      <animate attributeName="r" values="8;12;8" dur="2s" repeatCount="indefinite"/>
+      <animate attributeName="opacity" values="0.8;1;0.8" dur="2s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Inner Pulse -->
+    <circle cx="0" cy="0" r="4" fill="#ffffff" opacity="0.8">
+      <animate attributeName="opacity" values="0.8;0.3;0.8" dur="1.5s" repeatCount="indefinite"/>
+    </circle>
+    
+    <!-- Network Connectors -->
+    <g stroke="#00d4ff" stroke-width="1" opacity="0.6">
+      <line x1="0" y1="-16" x2="0" y2="-24"/>
+      <line x1="13.86" y1="-8" x2="20.78" y2="-12"/>
+      <line x1="13.86" y1="8" x2="20.78" y2="12"/>
+      <line x1="0" y1="16" x2="0" y2="24"/>
+      <line x1="-13.86" y1="8" x2="-20.78" y2="12"/>
+      <line x1="-13.86" y1="-8" x2="-20.78" y2="-12"/>
+    </g>
+  </g>
+
+  <!-- Corner Accents -->
+  <g fill="none" stroke="#ff0080" stroke-width="2" opacity="0.5" filter="url(#iconGlow)">
+    <path d="M10 10 L10 20 L20 20"/>
+    <path d="M118 10 L108 10 L108 20"/>
+    <path d="M118 118 L118 108 L108 108"/>
+    <path d="M10 118 L20 118 L20 108"/>
+  </g>
+
+  <!-- Data Flow Particles -->
+  <g fill="#00ff88" opacity="0.7">
+    <circle cx="32" cy="96" r="1">
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="0,0; 64,-64; 0,0"
+        dur="4s"
+        repeatCount="indefinite"/>
+    </circle>
+    <circle cx="96" cy="32" r="1">
+      <animateTransform
+        attributeName="transform"
+        type="translate"
+        values="0,0; -64,64; 0,0"
+        dur="4s"
+        repeatCount="indefinite"
+        begin="1s"/>
+    </circle>
+  </g>
+</svg>
