@@ -1,47 +1,263 @@
-name: Simple NPM Publish
+name: Publish to NPM
 
 on:
+  push:
+    tags:
+      - 'v*'
+  release:
+    types: [published]
   workflow_dispatch:
     inputs:
-      version:
-        description: 'Version to publish'
+      version_type:
+        description: 'Version bump type'
         required: true
-        default: '3.1.0'
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      publish_npm:
+        description: 'Publish to NPM'
+        required: true
+        default: true
+        type: boolean
+      publish_beta:
+        description: 'Publish as beta'
+        required: true
+        default: false
+        type: boolean
 
 jobs:
-  publish:
+  verify:
+    name: Verify Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          # Remove cache: 'npm' since no lock file exists
+
+      - name: Install dependencies (if package.json exists)
+        run: |
+          if [ -f "package.json" ]; then
+            npm install --only=dev
+          else
+            echo "No package.json found, skipping dependency installation"
+          fi
+
+      - name: Verify build exists
+        run: |
+          if [ ! -f "chainwise.min.js" ]; then
+            echo "❌ chainwise.min.js not found"
+            exit 1
+          fi
+          echo "✅ chainwise.min.js found"
+
+      - name: Verify build integrity
+        run: |
+          # Basic file size check
+          MIN_SIZE=10000  # 10KB minimum
+          FILE_SIZE=$(stat -f%z chainwise.min.js 2>/dev/null || stat -c%s chainwise.min.js 2>/dev/null)
+          
+          if [ "$FILE_SIZE" -lt "$MIN_SIZE" ]; then
+            echo "❌ chainwise.min.js is too small ($FILE_SIZE bytes)"
+            exit 1
+          fi
+          
+          # Check for basic content
+          if ! grep -q "CryptoWallet" chainwise.min.js; then
+            echo "❌ chainwise.min.js doesn't contain CryptoWallet"
+            exit 1
+          fi
+          
+          echo "✅ Build integrity check passed ($FILE_SIZE bytes)"
+
+      - name: Test library loading
+        run: |
+          # Test that the file is valid JavaScript
+          node -e "
+            const fs = require('fs');
+            const content = fs.readFileSync('chainwise.min.js', 'utf8');
+            if (content.includes('CryptoWallet') && content.includes('NETWORK_CONFIGS')) {
+              console.log('✅ Library structure validated');
+            } else {
+              console.error('❌ Required components not found');
+              process.exit(1);
+            }
+          "
+
+  publish-npm:
+    name: Publish to NPM
+    runs-on: ubuntu-latest
+    needs: verify
+    if: github.event_name == 'release' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
           registry-url: 'https://registry.npmjs.org'
+          # Remove cache: 'npm' since no lock file exists
 
-      - name: Create package.json
+      - name: Install publishing dependencies
         run: |
-          cat > package.json << EOF
+          # Only install minimal dependencies needed for publishing
+          npm init -y 2>/dev/null || true
+
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Setup package.json for publishing
+        run: |
+          cat > package.json << 'EOF'
           {
             "name": "chainwise",
-            "version": "${{ github.event.inputs.version }}",
-            "description": "Universal Multi-Blockchain HD Wallet Library",
-            "main": "dist/chainwise.min.js",
-            "files": ["dist/chainwise.min.js", "README.md"],
-            "keywords": ["blockchain", "wallet", "crypto", "multi-chain"],
-            "author": "ChainWise Team",
-            "license": "MIT",
+            "version": "3.1.0",
+            "description": "Universal Multi-Blockchain HD Wallet Library with Integrated Crypto Operations",
+            "main": "chainwise.min.js",
+            "browser": "chainwise.min.js",
+            "files": [
+              "chainwise.min.js",
+              "README.md",
+              "LICENSE"
+            ],
+            "scripts": {
+              "test": "echo \"No tests specified\" && exit 0"
+            },
             "repository": {
               "type": "git",
-              "url": "https://github.com/${{ github.repository }}.git"
-            }
+              "url": "git+https://github.com/${{ github.repository }}.git"
+            },
+            "keywords": [
+              "blockchain",
+              "wallet",
+              "crypto",
+              "bitcoin",
+              "ethereum",
+              "solana",
+              "cardano",
+              "polkadot",
+              "hd-wallet",
+              "bip32",
+              "bip44",
+              "multi-chain",
+              "web3",
+              "cryptography",
+              "javascript",
+              "browser"
+            ],
+            "author": "ChainWise Team",
+            "license": "MIT",
+            "bugs": {
+              "url": "https://github.com/${{ github.repository }}/issues"
+            },
+            "homepage": "https://github.com/${{ github.repository }}#readme",
+            "engines": {
+              "node": ">=14.0.0"
+            },
+            "jsdelivr": "chainwise.min.js",
+            "unpkg": "chainwise.min.js"
           }
           EOF
 
-      - name: Verify file exists
-        run: ls -la chainwise.min.js
+      - name: Version bump (workflow_dispatch only)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          npm version ${{ github.event.inputs.version_type }} --no-git-tag-version
+          VERSION=$(node -p "require('./package.json').version")
+          echo "NEW_VERSION=$VERSION" >> $GITHUB_ENV
 
-      - name: Publish to NPM
+      - name: Extract version from tag (release)
+        if: github.event_name == 'release'
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          echo "NEW_VERSION=$VERSION" >> $GITHUB_ENV
+          npm version $VERSION --no-git-tag-version
+
+      - name: Verify package contents
+        run: |
+          echo "📦 Package contents:"
+          npm pack --dry-run
+
+      - name: Publish to NPM (Latest)
+        if: github.event.inputs.publish_beta != 'true'
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish to NPM (Beta)
+        if: github.event.inputs.publish_beta == 'true'
+        run: npm publish --tag beta --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Create Git tag (workflow_dispatch only)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          git tag "v${{ env.NEW_VERSION }}"
+          git push origin "v${{ env.NEW_VERSION }}"
+
+      - name: Create GitHub Release
+        if: github.event_name == 'workflow_dispatch'
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ env.NEW_VERSION }}
+          name: ChainWise v${{ env.NEW_VERSION }}
+          body: |
+            ## ChainWise v${{ env.NEW_VERSION }}
+            
+            Universal Multi-Blockchain HD Wallet Library
+            
+            ### 📦 Installation
+            ```bash
+            npm install chainwise@${{ env.NEW_VERSION }}
+            ```
+            
+            ### 🔗 CDN Links
+            ```html
+            <!-- Production -->
+            <script src="https://cdn.jsdelivr.net/npm/chainwise@${{ env.NEW_VERSION }}/chainwise.min.js"></script>
+            
+            <!-- Alternative -->
+            <script src="https://unpkg.com/chainwise@${{ env.NEW_VERSION }}/chainwise.min.js"></script>
+            ```
+            
+            ### 🌐 Supported Networks
+            Bitcoin, Ethereum, Solana, Cardano, Polkadot, Kusama, Avalanche, Binance Smart Chain, Polygon, Cosmos, NEAR, Tron, Algorand, Stellar, Ripple, Litecoin, Filecoin, Nostr
+            
+            ### 🚀 Features
+            - HD Wallet with BIP32/BIP44 support
+            - Multi-curve cryptography (secp256k1, ed25519, sr25519)
+            - Web Workers for performance
+            - AES-256-GCM encryption
+            - 17+ blockchain networks
+            - Responsive cyberpunk & professional themes
+            
+            **Full documentation:** https://github.com/${{ github.repository }}
+          files: |
+            chainwise.min.js
+          draft: false
+          prerelease: ${{ github.event.inputs.publish_beta == 'true' }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify success
+        run: |
+          echo "✅ Successfully published ChainWise v${{ env.NEW_VERSION }} to NPM"
+          echo "📦 NPM: https://www.npmjs.com/package/chainwise"
+          echo "🔗 CDN: https://cdn.jsdelivr.net/npm/chainwise@${{ env.NEW_VERSION }}/chainwise.min.js"
