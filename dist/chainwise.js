@@ -1,6 +1,6 @@
 /**
- * Universal CryptoWallet - Multi-Blockchain HD Wallet Library
- * Version: 3.1.0
+ * ChainWise - Multi-Blockchain HD Wallet Library
+ * Version: 4.4.0
  */
 
 (function(global) {
@@ -260,7 +260,7 @@
     };
 
     /**
-     * Universal CryptoWallet Class with Integrated CryptoBundler
+     * ChainWise Class with Integrated CryptoBundler
      */
     class CryptoWallet {
         constructor(options = {}) {
@@ -385,7 +385,7 @@
          */
         _generateWorkerCode() {
             return `
-// Universal CryptoWallet Worker with Integrated CryptoBundler
+// ChainWise Worker with Integrated CryptoBundler
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/elliptic/6.5.4/elliptic.min.js');
 importScripts('https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js');
 importScripts('https://cdn.jsdelivr.net/npm/js-sha3@0.8.0/src/sha3.min.js');
@@ -2224,7 +2224,7 @@ self.onmessage = async function(event) {
 
         async _openDB() {
             return new Promise((resolve, reject) => {
-                const request = indexedDB.open('UniversalCryptoWallet', 1);
+                const request = indexedDB.open('ChainWise', 1);
                 
                 request.onerror = () => reject(request.error);
                 request.onsuccess = () => resolve(request.result);
@@ -2625,7 +2625,7 @@ self.onmessage = async function(event) {
 
             return {
                 version: this.version,
-                type: 'universal-crypto-wallet-export',
+                type: 'chainwise-wallet-export',
                 data: {
                     encrypted: encrypted.encrypted,
                     salt: encrypted.salt,
@@ -2687,7 +2687,7 @@ self.onmessage = async function(event) {
 
             const backup = {
                 version: this.version,
-                type: 'universal-crypto-wallet-backup',
+                type: 'chainwise-wallet-backup',
                 timestamp: Date.now(),
                 networks: this.supportedNetworks,
                 addresses: this.getAllAddresses(),
@@ -2720,7 +2720,7 @@ self.onmessage = async function(event) {
          */
         async restoreWallet(backup, password) {
             try {
-                if (!backup || backup.type !== 'universal-crypto-wallet-backup') {
+                if (!backup || backup.type !== 'chainwise-wallet-backup') {
                     throw new Error('Invalid backup format');
                 }
 
