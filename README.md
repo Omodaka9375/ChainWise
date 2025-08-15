@@ -528,12 +528,10 @@ try {
 
 MIT License - see the [LICENSE](LICENSE) file for details.
 
----
 
 <div align="center">
   <p><strong>Built with ❤️ by Omodaka9375</strong></p>
   <p>Making multi-blockchain development simple and secure</p>
 </div>
 
----
 
