@@ -12,7 +12,6 @@ const requiredFiles = [
 
 const optionalFiles = [
     'chainwise.js',
-    'chainwise.esm.js',
     'chainwise.d.ts'
 ];
 

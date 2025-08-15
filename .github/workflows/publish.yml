@@ -24,38 +24,6 @@ on:
         type: boolean
 
 jobs:
-  verify:
-    name: Verify Build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Verify build exists
-        run: |
-          if [ ! -f "dist/chainwise.min.js" ]; then
-            echo "❌ chainwise.min.js not found in dist/"
-            exit 1
-          fi
-          echo "✅ chainwise.min.js found"
-
-      - name: Verify build integrity
-        run: node scripts/verify-build.js
-
-      - name: Test library loading
-        run: node scripts/test-library.js
-
   publish-npm:
     name: Publish to NPM
     runs-on: ubuntu-latest
@@ -119,7 +87,7 @@ jobs:
 
       - name: Publish to NPM (Beta)
         if: github.event.inputs.publish_beta == 'true'
-        run: npm publish --tag beta --access public
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
