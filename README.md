@@ -71,7 +71,7 @@ pnpm add chainwise
 <script src="https://cdn.jsdelivr.net/npm/chainwise@latest/dist/chainwise.min.js"></script>
 
 <!-- Development -->
-<script src="dist/chainwise.js"></script>
+<script src="https://unpkg.com/chainwise@latest/dist/chainwise.js"></script>
 ```
 
 ### Basic Usage

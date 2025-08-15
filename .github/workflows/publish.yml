@@ -127,12 +127,13 @@ jobs:
           cat > package.json << 'EOF'
           {
             "name": "chainwise",
-            "version": "3.1.0",
-            "description": "Universal Multi-Blockchain HD Wallet Library with Integrated Crypto Operations",
+            "version": "4.2.0",
+            "description": "Universal Multi-Blockchain HD Wallet Library for the Browser",
             "main": "dist/chainwise.min.js",
             "browser": "dist/chainwise.min.js",
             "files": [
               "dist/chainwise.min.js",
+              "dist/chainwise.js",
               "README.md",
               "LICENSE"
             ],
