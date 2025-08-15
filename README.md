@@ -26,7 +26,7 @@ ChainWise is a powerful, fast multi-blockchain HD wallet library that provides s
 
 ### Developer documentation
 
-[API.md](api.md)
+[API.md](API.md)
 
 
 
